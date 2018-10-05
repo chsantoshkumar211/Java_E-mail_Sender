@@ -1,6 +1,7 @@
 package mail;
 
 import java.util.Properties;
+import javax.swing.*;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -10,20 +11,26 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-public class JavaEmail {
+public class JavaEmail extends JFrame{
 
 	Properties emailProperties;
 	Session mailSession;
 	MimeMessage emailMessage;
-
+	 
 	public static void main(String args[]) throws AddressException,
 			MessagingException {
+		String from = JOptionPane.showInputDialog("Enter Your Email-id: ");
+	    String pwd = JOptionPane.showInputDialog("Enter Your password: ");
+		String to = JOptionPane.showInputDialog("Enter to Email-id: ");
+		String sub = JOptionPane.showInputDialog("Enter subject: ");
+	    String msg = JOptionPane.showInputDialog("Enter body: ");
+
 
 		JavaEmail javaEmail = new JavaEmail();
-
 		javaEmail.setMailServerProperties();
-		javaEmail.createEmailMessage();
-		javaEmail.sendEmail();
+		javaEmail.createEmailMessage(to,sub,msg);
+		javaEmail.sendEmail(from,pwd);
+		 
 	}
 
 	public void setMailServerProperties() {
@@ -37,11 +44,11 @@ public class JavaEmail {
 
 	}
 
-	public void createEmailMessage() throws AddressException,
+	public void createEmailMessage(String to,String sub,String msg) throws AddressException,
 			MessagingException {
-		String[] toEmails = { "santosh@thechs.in" };
-		String emailSubject = "Java Email";
-		String emailBody = "This is an email sent by JavaMail api.";
+		String[] toEmails = { to };
+		String emailSubject = sub;
+		String emailBody = msg;
 
 		mailSession = Session.getDefaultInstance(emailProperties, null);
 		emailMessage = new MimeMessage(mailSession);
@@ -56,11 +63,11 @@ public class JavaEmail {
 
 	}
 
-	public void sendEmail() throws AddressException, MessagingException {
+	public void sendEmail(String from,String pwd) throws AddressException, MessagingException {
 
 		String emailHost = "smtp.gmail.com";
-		String fromUser = "ch.santoshkumar211";//just the id alone without @gmail.com
-		String fromUserEmailPassword = "";
+		String fromUser = from;//just the id alone without @gmail.com
+		String fromUserEmailPassword = pwd;
 
 		Transport transport = mailSession.getTransport("smtp");
 
@@ -68,6 +75,7 @@ public class JavaEmail {
 		transport.sendMessage(emailMessage, emailMessage.getAllRecipients());
 		transport.close();
 		System.out.println("Email sent successfully.");
+
 	}
 
 }
