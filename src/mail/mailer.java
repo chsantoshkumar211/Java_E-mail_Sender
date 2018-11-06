@@ -22,16 +22,16 @@ private String subject;
 private String msg;
 
 public mailer() {
-    JFrame main = new JFrame("Java E-mail sender");
+    JFrame main = new JFrame("Java Mailer");
     main.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     main.setResizable(false);
     main.setLayout(null);
     main.setPreferredSize(new Dimension(500, 500));
     main.setLocation(400, 200);
 
-    // Heading: LOGIN
-    JLabel heading = new JLabel("Java E-mail sender");
-    heading.setBounds(80, 20,200, 20);
+    // Heading: Java Mailer
+    JLabel heading = new JLabel("Java Mailer");
+    heading.setBounds(210, 20,200, 20);
     main.add(heading);
 
     // Label email
@@ -100,7 +100,6 @@ public mailer() {
     loginBtn.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            status_label.setText("Status : Processing your request...");
             email = email_field.getText();
             password = String.valueOf(password_field.getPassword());
             to_email = to_email_field.getText();
